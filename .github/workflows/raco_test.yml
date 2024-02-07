@@ -1,0 +1,50 @@
+name: ci
+
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        milestone:
+          # Comment in/out milestones as necessary
+          #- milestone-1
+          #- milestone-2
+          #- milestone-3
+          #- milestone-4
+          #- milestone-5
+          #- milestone-6
+          #- milestone-7
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    # Based on https://github.com/Bogdanp/setup-racket-cache-example
+    - name: Cache Racket dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/racket
+          ~/.local/share/racket
+        key: ${{ runner.os }}-racket-8.10
+    - name: Install Racket
+      uses: Bogdanp/setup-racket@v1.11
+      with:
+        architecture: 'x64'
+        distribution: 'full'
+        variant: 'CS'
+        version: '8.10'
+    - name: Install support library
+      run: |
+        raco pkg install --batch --auto --skip-installed \
+          https://github.com/cpsc411/cpsc411-pub.git?path=cpsc411-lib#2022w2
+    - name: Install nasm
+      run: sudo apt-get install -y nasm
+
+    # This will run all the tests
+    #   1. The interface tests to see if the correct functions are provided
+    #   2. The test suite defined in each of the compilation passes
+    #   3. The compiler test suite given by the support library
+    - name: Run tests
+      run: raco test interface-test.rkt passes/*.rkt compiler.rkt
+      working-directory: ./${{ matrix.milestone }}
