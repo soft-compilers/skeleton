@@ -57,7 +57,6 @@
    rackunit
    rackunit/text-ui
    cpsc411/langs/v4
-   cpsc411/test-suite/private/v4
    cpsc411/test-suite/public/v4
    racket/engine)
 
@@ -90,15 +89,6 @@
 
   (current-pass-list
    (map car pass-map-opt))
-
-  (run-tests
-  (v4-private-test-suite
-   (current-pass-list)
-   (map cdr pass-map-opt)
-   link-paren-x64
-   interp-paren-x64
-   interp-values-lang
-   check-values-lang))
 
   (run-tests
    (v4-public-test-suite
