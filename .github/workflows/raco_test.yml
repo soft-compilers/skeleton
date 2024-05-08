@@ -37,7 +37,7 @@ jobs:
     - name: Install support library
       run: |
         raco pkg install --batch --auto --skip-installed \
-          https://github.com/cpsc411/cpsc411-pub.git?path=cpsc411-lib#2022w2
+          https://github.com/soft-compilers/cpsc411-pub.git?path=cpsc411-lib
     - name: Install nasm
       run: sudo apt-get install -y nasm
 
