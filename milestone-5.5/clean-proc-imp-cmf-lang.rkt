@@ -15,7 +15,7 @@
 (define/contract (clean-proc-imp-cmf-lang p)
   (proc-imp-cmf-lang-v5? . -> . proc-imp-cmf-lang-v5?)
 
-  (define (clean-pred pred live)
+  (define (clean-pred pred)
     (match pred
       [`(,(? relop? relop) ,loc ,opand)
        pred]
